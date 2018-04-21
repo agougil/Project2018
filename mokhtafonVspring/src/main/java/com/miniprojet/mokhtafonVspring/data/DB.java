@@ -1,6 +1,9 @@
 package com.miniprojet.mokhtafonVspring.data;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,28 +18,51 @@ import com.miniprojet.mokhtafonVspring.model.Personne;
 public class DB implements IDAO {
 
 	private static SessionFactory sessionFactory;
-	private static ServiceRegistry serviceRegistry;
 	static Session sessionObj;
 
 	public static SessionFactory buildSessionFactory() {
 		Configuration configuration = new Configuration();
-		configuration.configure();
+		// configuration.addAnnotatedClass(com.miniprojet.mokhtafonVspring.model.Article.class);
+		configuration.addAnnotatedClass(com.miniprojet.mokhtafonVspring.model.Personne.class);
+		// configuration.addAnnotatedClass(com.miniprojet.mokhtafonVspring.model.Article.class);
+		configuration.configure("hibernate.cfg.xml");
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		return sessionFactory;
 	}
 
-	/*public static void createRecord() {
-		try {
-			sessionObj = buildSessionFactory().openSession();
-			sessionObj.beginTransaction();
-			sessionObj.save(studentObj);
-			sessionObj.getTransaction().commit();
+	@Override
+	public Personne getUserByEmail(String email) {
+	      Personne findStudentObj = null;
+	      	        try {
+	      	            sessionObj = buildSessionFactory().openSession();
+	      	            sessionObj.beginTransaction();
+	      	            findStudentObj = (Personne) sessionObj.load(Personne.class, email);
+	      	        } catch(Exception sqlException) {
+	      	            if(null != sessionObj.getTransaction()) {
+	      	                sessionObj.getTransaction().rollback();
+	      	            }
+	      	            sqlException.printStackTrace();
+	      	        } 
+	      	        return findStudentObj;
+			}
 
+	@Override
+
+	public List<Article> getArticlesOfUser(String Email) {
+		List Articles = new ArrayList();
+		try {
+			// Getting Session Object From SessionFactory
+			sessionObj = buildSessionFactory().openSession();
+			// Getting Transaction Object From Session Object
+			sessionObj.beginTransaction();
+			TypedQuery<Article> query = sessionObj.createQuery("Select * FROM Article where email='" + Email + "'");
+			Articles = query.getResultList();
+			// Articles = sessionObj.createQuery("Select * FROM Article where
+			// email='"+Email+"'").list();
 		} catch (Exception sqlException) {
 			if (null != sessionObj.getTransaction()) {
-
 				sessionObj.getTransaction().rollback();
 			}
 			sqlException.printStackTrace();
@@ -45,40 +71,26 @@ public class DB implements IDAO {
 				sessionObj.close();
 			}
 		}
-	}*/
-
-	@Override
-	public Personne checkLogin(String email, String userPassword) {
-
-		/*
-		 * Personne p; SessionFactory sessionFactory = new
-		 * AnnotationConfiguration().configure().buildSessionFactory(); Session
-		 * session = sessionFactory.openSession(); ServiceRegistry reg= new
-		 * ServiceRegistryBuilder().applySettings(con.getProperties()).
-		 * buildServiceRegistry(); SessionFactory
-		 * sf=con.buildSessionFactory(reg); Session s=sf.openSession();
-		 * Transaction tx=s.beginTransaction();
-		 */
-		return null;
-	}
-
-	@Override
-	public List<Article> getArticlesOfUser(String Email) {
-		// TODO Auto-generated method stub
-		return null;
+		return Articles;
 	}
 
 	@Override
 	public void addArticle(Article a) {
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		SessionFactory sf = cfg.buildSessionFactory();
-		Session s = sf.openSession();
-		Transaction tx = s.beginTransaction();
-		s.save(a);
-		s.flush();
-		tx.commit();
-		s.close();
+		try {
+			sessionObj = buildSessionFactory().openSession();
+			sessionObj.beginTransaction();
+			sessionObj.save(a);
+			sessionObj.getTransaction().commit();
+		} catch (Exception sqlException) {
+			if (null != sessionObj.getTransaction()) {
+				sessionObj.getTransaction().rollback();
+			}
+			sqlException.printStackTrace();
+		} finally {
+			if (sessionObj != null) {
+				sessionObj.close();
+			}
+		}
 
 	}
 

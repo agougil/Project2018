@@ -19,7 +19,7 @@ import com.miniprojet.mokhtafonVspring.model.Personne;
 
 @Controller
 public class Controlle_1 {
-	
+	IDAO idao=new DB();
 	@RequestMapping(value = "/addUser")
 	public ModelAndView adduser(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
@@ -29,9 +29,7 @@ public class Controlle_1 {
 		String Addresse = request.getParameter("address");
 		String pass = request.getParameter("password");
 		//Personne p = new Personne(name, uname, email, Addresse, phone, pass, "");
-		Personne p=new Personne("test","test","test","test","test","test","test");
-		IDAO idao;
-		idao=new DB();
+		Personne p=new Personne("test","test","test5","test","test","test","test");
 		idao.addUser(p);
 		
 		ModelAndView mv = new ModelAndView();
@@ -42,5 +40,26 @@ public class Controlle_1 {
 	@RequestMapping(value = "/addArticle")
 	public void addarticle(HttpServletRequest request, HttpServletResponse response) {
 	
+	}
+	@RequestMapping("/loginCheck")
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv=null;
+		String email=request.getParameter("email");
+		String pass=request.getParameter("Password");
+		Personne p=idao.getUserByEmail(email);
+		if(p==null){
+				mv=new ModelAndView();
+				mv.setViewName("home");
+				
+		}else if(p.getPasse().equals(pass)){
+			mv=new ModelAndView();
+			mv.setViewName("login");
+		}
+		return mv;
+		
+	}
+	@RequestMapping(value="/login")
+	public String loginView(){
+		return "login";
 	}
 }

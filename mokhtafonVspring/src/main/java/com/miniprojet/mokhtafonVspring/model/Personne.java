@@ -2,9 +2,11 @@ package com.miniprojet.mokhtafonVspring.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name="Personne")
 public class Personne {
 
 	String nom;
