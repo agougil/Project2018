@@ -46,16 +46,13 @@ public class Controlle_1 {
 		ModelAndView mv=null;
 		String email=request.getParameter("email");
 		String pass=request.getParameter("Password");
-		//Personne p=idao.getUserByEmail(email);
-		if(email.equals("aaa@aaa.aaa") && pass.equals("123456")){
-				mv=new ModelAndView();
-				mv.setViewName("home");
-				
-		}
-		else {
+		Personne p=idao.getUserByEmail(email);
+		if(p!=null && p.getPasse().equals(pass)){
 			mv=new ModelAndView();
-			mv.setViewName("login");
-		}
+			mv.setViewName("home");
+		} else{mv=new ModelAndView();
+		mv.setViewName("login");}
+		
 		return mv;
 		
 	}

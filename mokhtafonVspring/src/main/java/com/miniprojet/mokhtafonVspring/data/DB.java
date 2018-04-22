@@ -38,7 +38,7 @@ public class DB implements IDAO {
 	      	        try {
 	      	            sessionObj = buildSessionFactory().openSession();
 	      	            sessionObj.beginTransaction();
-	      	            findStudentObj = (Personne) sessionObj.load(Personne.class, email);
+	      	            findStudentObj = (Personne) sessionObj.get(Personne.class, email);
 	      	        } catch(Exception sqlException) {
 	      	            if(null != sessionObj.getTransaction()) {
 	      	                sessionObj.getTransaction().rollback();

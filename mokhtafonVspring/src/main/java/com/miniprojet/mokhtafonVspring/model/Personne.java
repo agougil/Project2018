@@ -120,5 +120,6 @@ public class Personne {
 		this.image=image;
 		
 	}
+	public Personne(){}
 
 }
