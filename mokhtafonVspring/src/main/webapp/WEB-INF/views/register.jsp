@@ -78,7 +78,7 @@
           <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-              <form class="mkhtfn-form">
+              <form class="mkhtfn-form" method="post" action="addUser">
                 <h2 class="mkhtfn-form-title">Register</h2>
 
                 <div class="form-group">
@@ -152,10 +152,10 @@
                 </div>
 
                 <div class="form-group ">
-                  <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                  <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
                 </div>
                 <div class="login-register">
-                        <a href="index.php">Login</a>
+                        <a href="/mokhtafonVspring/login">Login</a>
                 </div>
 
               </form>

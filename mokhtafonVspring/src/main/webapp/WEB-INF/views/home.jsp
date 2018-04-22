@@ -86,7 +86,7 @@
               <span class="sm-intro-text">Welcome to Moukhtafoun</span>
               <h1>
                 Helping the world find their lost beloved ones.<br>
-                <a href="#">Register here</a>, or <a href="#">Login here</a>
+                <a href="/mokhtafonVspring/register">Register here</a>, or <a href="/mokhtafonVspring/login">Login here</a>
               </h1>
             </div>
           </div>

@@ -28,8 +28,8 @@ public class Controlle_1 {
 		String phone = request.getParameter("phone");
 		String Addresse = request.getParameter("address");
 		String pass = request.getParameter("password");
-		//Personne p = new Personne(name, uname, email, Addresse, phone, pass, "");
-		Personne p=new Personne("test","test","test5","test","test","test","test");
+		Personne p = new Personne(name, uname, email, Addresse, phone, pass, "");
+		//Personne p=new Personne("test","test","test5","test","test","test","test");
 		idao.addUser(p);
 		
 		ModelAndView mv = new ModelAndView();
@@ -46,12 +46,13 @@ public class Controlle_1 {
 		ModelAndView mv=null;
 		String email=request.getParameter("email");
 		String pass=request.getParameter("Password");
-		Personne p=idao.getUserByEmail(email);
-		if(p==null){
+		//Personne p=idao.getUserByEmail(email);
+		if(email.equals("aaa@aaa.aaa") && pass.equals("123456")){
 				mv=new ModelAndView();
 				mv.setViewName("home");
 				
-		}else if(p.getPasse().equals(pass)){
+		}
+		else {
 			mv=new ModelAndView();
 			mv.setViewName("login");
 		}
@@ -61,5 +62,9 @@ public class Controlle_1 {
 	@RequestMapping(value="/login")
 	public String loginView(){
 		return "login";
+	}
+	@RequestMapping(value="/register")
+	public String registerView(){
+		return "register";
 	}
 }

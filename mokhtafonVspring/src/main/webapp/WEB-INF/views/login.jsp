@@ -78,7 +78,7 @@
           <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-              <form class="mkhtfn-form"  action="loginCheck" methode="post">
+              <form class="mkhtfn-form"  action="loginCheck" method="post">
                 <h2 class="mkhtfn-form-title">Login</h2>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
